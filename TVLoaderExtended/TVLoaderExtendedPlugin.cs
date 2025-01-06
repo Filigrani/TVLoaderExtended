@@ -12,7 +12,7 @@ namespace TVLoaderExtended
 	{
 		private const string MyGUID = "Filigrani.TVLoaderExtended";
 		private const string PluginName = "TVLoaderExtended";
-		private const string VersionString = "1.1.2";
+		private const string VersionString = "1.1.3";
 
 		private static readonly Harmony Harmony = new Harmony(MyGUID);
 		public static ManualLogSource Log = new ManualLogSource(PluginName);
