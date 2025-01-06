@@ -10,8 +10,8 @@ namespace TVLoaderExtended
 	[BepInPlugin(MyGUID, PluginName, VersionString)]
 	public class TVLoaderExtendedPlugin : BaseUnityPlugin
 	{
-		private const string MyGUID = "Filigrani.TVLoaderExtendedExtended";
-		private const string PluginName = "TVLoaderExtendedExtended";
+		private const string MyGUID = "Filigrani.TVLoaderExtended";
+		private const string PluginName = "TVLoaderExtended";
 		private const string VersionString = "1.1.2";
 
 		private static readonly Harmony Harmony = new Harmony(MyGUID);

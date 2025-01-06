@@ -17,6 +17,13 @@ namespace TVLoaderExtended.Patches
         internal static void StartPatching()
         {
             StartOfRound Instance = StartOfRound.Instance;
+
+            // We not need to do this if we are client.
+            if (!Instance.NetworkManager.IsHost)
+            {
+                return;
+            }
+
             List<UnlockableItem> List = Instance.unlockablesList.unlockables;
 
 

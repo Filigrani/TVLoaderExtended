@@ -103,7 +103,7 @@ namespace TVLoaderExtended.Patches
             if (s_LastSeenIndex != currentClip)
 			{
 				s_LastSeenIndex = currentClip;
-                Debug.Log("[ClientUpdate] currentClip " + currentClip + " Instance.tvOn " + Instance.tvOn);
+                TVLoaderExtendedPlugin.Log.LogInfo("[ClientUpdate] currentClip " + currentClip + " Instance.tvOn " + Instance.tvOn);
                 if (Instance.tvOn)
                 {
                     PlayVideo(Instance);
@@ -142,8 +142,12 @@ namespace TVLoaderExtended.Patches
                 if (PlayerIsHost(__instance))
                 {
                     currentClipProperty.SetValue(__instance, 0);
-                    s_EverWasOn = false;
                 }
+                else
+                {
+                    currentClipProperty.SetValue(__instance, -1);
+                }
+                s_EverWasOn = false;
             }
 
             return false;
@@ -224,7 +228,12 @@ namespace TVLoaderExtended.Patches
 
 		private static void PrepareVideo(TVScript instance, int index)
 		{
-			string VideoPath = GetVideoPath(index);
+			if(index < 0)
+            {
+                return;
+            }
+            
+            string VideoPath = GetVideoPath(index);
 
 			GameObject.Destroy(instance.video);
 
