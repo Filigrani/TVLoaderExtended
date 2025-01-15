@@ -28,10 +28,11 @@ namespace TVLoaderExtended.Patches
 
         private static bool s_EverWasOn = false;
 
+        private static bool s_BeenLoaded = false;
+
         private static RenderTexture renderTexture;
 
         private static List<string> m_Videos = new List<string>();
-		private static int s_LastSeed = 0;
 
 		private static int s_LastSeenIndex = -1;
 
@@ -40,9 +41,9 @@ namespace TVLoaderExtended.Patches
 			return GetFullPath(m_Videos[Index]);
         }
 
-        private static int GetSeed(TVScript Instance)
+        private static int GetSeed()
 		{
-			return Instance.NetworkObjectId.ToString().GetHashCode();
+			return Guid.NewGuid().GetHashCode();
 		}
 
         private static void Shuffle<T>(List<T> List, int Seed)
@@ -88,8 +89,9 @@ namespace TVLoaderExtended.Patches
         public static void ShuffleVideos(TVScript Instance)
         {
             m_Videos = GetClearList(VideoManager.Videos);
-            TVLoaderExtendedPlugin.Log.LogInfo("[TVScriptExtended] ShuffleVideos " + GetSeed(Instance));
-            Shuffle(m_Videos, GetSeed(Instance));
+            int seed = GetSeed();
+            TVLoaderExtendedPlugin.Log.LogInfo("[TVScriptExtended] ShuffleVideos " + seed);
+            Shuffle(m_Videos, seed);
 
             for (int i = 0; (i < m_Videos.Count); i++)
             {
@@ -134,9 +136,9 @@ namespace TVLoaderExtended.Patches
 				ClientUpdate(__instance);
             }
 
-            if (s_LastSeed != GetSeed(__instance))
+            if (!s_BeenLoaded)
             {
-                s_LastSeed = GetSeed(__instance);
+                s_BeenLoaded = true;
                 ShuffleVideos(__instance);
 
                 if (PlayerIsHost(__instance))
